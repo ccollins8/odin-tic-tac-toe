@@ -22,7 +22,38 @@ const playerTwo = {
     marker: "O"
 }
 
-const game = (function () {
+const displayController = ( function() {
+
+    const grid = document.querySelector('.grid-container')
+
+    const render = () => {
+        gameboard.board.forEach((item) => {
+            const button = document.createElement('button');
+            button.textContent = item;
+            grid.appendChild(button)
+        })
+    }
+
+    render()
+
+    const buttons = document.querySelectorAll('button')
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+            alert("hello!")
+        })
+    })
+
+    
+
+    return {
+        render
+    }
+
+
+})();
+
+const gameController = (function () {
 
     currentPlayer = playerOne;
     gameOver = false;
