@@ -3,7 +3,7 @@
 html, body {
     margin: 0;
     padding: 0;
-    font-family: rob;
+    font-family: "Roboto";
     height: 100%;
 }
 
@@ -23,7 +23,13 @@ html, body {
     background-color: #f1f5f9;
     padding: 2rem;
     display: grid;
-    
+    grid-template-rows: 1fr 5fr;
+    gap: 1rem;
+}
+
+.main .message {
+    font-size: 5rem;
+    justify-self: center;
 }
 
 .main .grid-container {
@@ -35,13 +41,13 @@ html, body {
     gap: 0.5rem;
 }
 
-.main button {
+.main .grid-container button {
     background-color: #f1f5f9;
     font-size: 5rem;
     border: none;
 }
 
-.main button:hover {
+.main .grid-container button:hover {
     background-color: #b8bbbe;
     cursor: pointer;
 }

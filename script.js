@@ -1,13 +1,19 @@
 
 const gameboard = (function ()  {
 
-    const board = ["1","2","3","4","5","6","7","8","9"]
+    const board = ["-","-","-","-","-","-","-","-","-"]
 
     const updateBoard = (index,marker) => (
-        board[index - 1] = marker
+        board[index] = marker
     );
 
-    return {board, updateBoard};
+    const reset = () => {
+        for (let i = 0; i < board.length; i++) {
+            board[i] = ""
+        }
+    }
+
+    return {board, updateBoard, reset};
 
 
 })();
@@ -23,15 +29,14 @@ const playerTwo = {
 }
 
 const displayController = ( function() {
-
-    const grid = document.querySelector('.grid-container')
+    
+    const messageElement = document.querySelector('.message')
+    const gridItems = document.querySelectorAll('.grid-container button')
 
     const render = () => {
-        gameboard.board.forEach((item) => {
-            const button = document.createElement('button');
-            button.textContent = item;
-            grid.appendChild(button)
-        })
+        for (let i = 0; i < gridItems.length; i++ ) {
+            gridItems[i].textContent = gameboard.board[i]
+        }
     }
 
     render()
@@ -40,14 +45,22 @@ const displayController = ( function() {
 
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
-            alert("hello!")
+            gameboard.updateBoard(button.getAttribute('id'),currentPlayer.marker)
+            gameController.playTurn()
+            // button.textContent = gameboard.board[button.getAttribute('id')];
+            render()
         })
     })
+
+    const setMessage = (message) => {
+        messageElement.textContent = message;
+    }
 
     
 
     return {
-        render
+        render,
+        setMessage
     }
 
 
@@ -59,18 +72,18 @@ const gameController = (function () {
     gameOver = false;
     let turn = 0;
 
-    const play = () => {
-        while (gameOver == false && turn < 8) {
-            playTurn();
-            turn++;
-        }
-    }
+    // const play = () => {
+    //     while (gameOver == false && turn < 8) {
+    //         playTurn();
+    //         turn++;
+    //     }
+    // }
 
-    function playTurn() {
-        const choice = prompt(`Your turn ${currentPlayer.name}`)
-        gameboard.updateBoard(choice,currentPlayer.marker)
-        alert(`${gameboard.board.slice(0,3)}\n${gameboard.board.slice(3,6)}\n${gameboard.board.slice(6,9)}
-        `)
+    const playTurn = () => {
+        // const choice = prompt(`Your turn ${currentPlayer.name}`)
+        // gameboard.updateBoard(choice,currentPlayer.marker)
+        // alert(`${gameboard.board.slice(0,3)}\n${gameboard.board.slice(3,6)}\n${gameboard.board.slice(6,9)}
+        // `)
         determineWinner();
         if (gameOver == true) {
             endGame();
@@ -103,7 +116,12 @@ const gameController = (function () {
     }
 
     function endGame() {
-        alert(`${currentPlayer.name} has won!`)
+        // alert(`${currentPlayer.name} has won!`)
+        displayController.setMessage(
+            `${currentPlayer.name} has won!`
+        )
+        gameboard.reset()
+        // displayController.reset()
     }
 
     function changeCurrentPlayer() {
@@ -115,8 +133,7 @@ const gameController = (function () {
     }
 
     return {
-        play,
-        turn
+        playTurn
     }
     
 
