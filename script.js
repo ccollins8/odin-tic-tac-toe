@@ -9,8 +9,9 @@ const gameboard = (function ()  {
 
     const reset = () => {
         for (let i = 0; i < board.length; i++) {
-            board[i] = ""
+            board[i] = "-"
         }
+        displayController.render()
     }
 
     return {board, updateBoard, reset};
@@ -24,7 +25,7 @@ const playerOne = {
 }
 
 const playerTwo = {
-    name: "jenn",
+    name: "Jenn",
     marker: "O"
 }
 
@@ -32,6 +33,7 @@ const displayController = ( function() {
     
     const messageElement = document.querySelector('.message')
     const gridItems = document.querySelectorAll('.grid-container button')
+    const restartBtn = document.querySelector('.restart')
 
     const render = () => {
         for (let i = 0; i < gridItems.length; i++ ) {
@@ -52,10 +54,14 @@ const displayController = ( function() {
         })
     })
 
+    restartBtn.addEventListener('click', () => {
+        gameboard.reset()
+        gameController.reset()
+    })
+
     const setMessage = (message) => {
         messageElement.textContent = message;
     }
-
     
 
     return {
@@ -71,6 +77,10 @@ const gameController = (function () {
     currentPlayer = playerOne;
     gameOver = false;
     let turn = 0;
+
+    displayController.setMessage(
+        `${playerOne.name}'s Turn!`
+    )
 
     // const play = () => {
     //     while (gameOver == false && turn < 8) {
@@ -89,6 +99,9 @@ const gameController = (function () {
             endGame();
         } else {
             changeCurrentPlayer();
+            displayController.setMessage(
+                `${currentPlayer.name}'s Turn!`
+            )
 
         }
         
@@ -120,8 +133,6 @@ const gameController = (function () {
         displayController.setMessage(
             `${currentPlayer.name} has won!`
         )
-        gameboard.reset()
-        // displayController.reset()
     }
 
     function changeCurrentPlayer() {
@@ -132,8 +143,16 @@ const gameController = (function () {
         }
     }
 
+    const reset = () => {
+        gameOver = false;
+        changeCurrentPlayer();
+        displayController.setMessage(
+            `${currentPlayer.name}'s Turn!`
+        )
+    }
+
     return {
-        playTurn
+        playTurn, reset
     }
     
 
