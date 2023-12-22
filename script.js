@@ -47,10 +47,12 @@ const displayController = ( function() {
 
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
+            if (button.textContent != "X" && button.textContent != "O") {
             gameboard.updateBoard(button.getAttribute('id'),currentPlayer.marker)
             gameController.playTurn()
             // button.textContent = gameboard.board[button.getAttribute('id')];
             render()
+            }
         })
     })
 
