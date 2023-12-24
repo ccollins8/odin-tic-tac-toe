@@ -47,7 +47,7 @@ const displayController = ( function() {
 
     buttons.forEach((button) => {
         button.addEventListener("click", () => {
-            if (button.textContent != "X" && button.textContent != "O") {
+            if (button.textContent != "X" && button.textContent != "O" && gameController.getGameOver() == false) {
             gameboard.updateBoard(button.getAttribute('id'),currentPlayer.marker)
             gameController.playTurn()
             // button.textContent = gameboard.board[button.getAttribute('id')];
@@ -79,6 +79,8 @@ const gameController = (function () {
     currentPlayer = playerOne;
     gameOver = false;
     let turn = 0;
+
+    const getGameOver = () => gameOver
 
     displayController.setMessage(
         `${playerOne.name}'s Turn!`
@@ -154,7 +156,7 @@ const gameController = (function () {
     }
 
     return {
-        playTurn, reset
+        playTurn, reset, getGameOver
     }
     
 
