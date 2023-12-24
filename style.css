@@ -29,7 +29,12 @@ html, body {
     background-color: #f1f5f9;
     padding: 2rem;
     display: grid;
-    grid-template-rows: 1fr 5fr;
+    gap: 2rem;
+}
+
+.main .names {
+    justify-self: center;
+    display: flex;
     gap: 2rem;
 }
 
