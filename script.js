@@ -40,7 +40,7 @@ const displayController = ( function() {
     const gridItems = document.querySelectorAll('.grid-container button')
     const restartBtn = document.querySelector('.restart')
 
-    form.addEventListener("click", (e) => {
+    form.addEventListener("submit", (e) => {
         e.preventDefault()
         playerOne.name = playerOneInput.value
         playerTwo.name = playerTwoInput.value
