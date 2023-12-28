@@ -98,14 +98,11 @@ const gameController = (function () {
 
     const playTurn = () => {
         determineWinner();
-        if (gameOver == true) {
-            endGame();
-        } else {
+        if (gameOver != true) {
             changeCurrentPlayer();
             displayController.setMessage(
                 `${currentPlayer.name}'s Turn!`
             )
-
         }
         
 
@@ -127,16 +124,31 @@ const gameController = (function () {
                 gameboard.board[position[1]] == currentPlayer.marker &&
                 gameboard.board[position[2]] == currentPlayer.marker) {
                     gameOver = true;
+                    displayController.setMessage(
+                        `${currentPlayer.name} has won!`
+                    )
+
                 }
         })
+
+        if (gameboard.board.every(elem => (elem == "X" || elem == "O"))) {
+            gameOver = true;
+            displayController.setMessage(`Tie!`)
+        }
+
     }
 
-    function endGame() {
-        // alert(`${currentPlayer.name} has won!`)
-        displayController.setMessage(
-            `${currentPlayer.name} has won!`
-        )
-    }
+    // function endGame() {
+    //     // if (gameboard.board.every(elem => (elem == "X" || elem == "O"))) {
+    //     //     displayController.setMessage(
+    //     //         `Tie!`
+    //     //     )
+    //     // } else {
+    //     //     displayController.setMessage(
+    //     //         `${currentPlayer.name} has won!`
+    //     //     )
+    //     }
+    // }
 
     function changeCurrentPlayer() {
         if (currentPlayer == playerOne) {
